@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import os
 import re
+import sys
 import tarfile
 from dataclasses import dataclass
 
@@ -27,6 +28,7 @@ class Package:
     files_include_hashes: list[str] = None
     download_url: str | None = None
     download_hash_sha256: str | None = None
+    cpes: list[str] = None
 
     @property
     def spdx_id(self) -> str:
@@ -60,6 +62,7 @@ PACKAGES = [
         download_url=f"https://www.python.org/ftp/python/{CPYTHON_VERSION}/{CPYTHON_TARBALL_FILENAME}",
         download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
         files_include=[],
+        cpes=[f"cpe:2.3:a:python:python:{CPYTHON_VERSION}:*:*:*:*:*:*:*"],
     ),
     Package(
         name="mpdecimal",
@@ -100,6 +103,7 @@ PACKAGES = [
         files_include_hashes=[
             "1ce1444111271cc11d71b72c376a17447cf3d3b7dd61a0a01456d2e06faf22e9"
         ],
+        cpes=["cpe:2.3:a:libexpat_project:libexpat:2.5.0:*:*:*:*:*:*:*"],
     ),
 ]
 PACKAGES[1:] = sorted(PACKAGES[1:], key=lambda pkg: pkg.name)
@@ -115,6 +119,16 @@ assert CPYTHON_PACKAGE.name == "CPython"
 
 
 def package_to_spdx_package(package: Package) -> spdx.Package:
+    external_references = []
+    if package.cpes:
+        for cpe in package.cpes:
+            assert cpe.startswith("cpe:2.3")
+            external_references.append(
+                spdx.ExternalPackageRef(
+                    spdx.ExternalPackageRefCategory.SECURITY, "cpe23Type", cpe
+                )
+            )
+
     return spdx.Package(
         spdx_id=package.spdx_id,
         name=package.name,
@@ -124,6 +138,7 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
             spdx.Checksum(spdx.ChecksumAlgorithm.SHA256, package.download_hash_sha256)
         ],
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
+        external_references=external_references,
     )
 
 
@@ -269,7 +284,9 @@ def main() -> int:
     if package_file_hash_differences:
         print("There are differences in the file contents of the following packages:")
         for package, package_file_hash in package_file_hash_differences:
-            print(f"* {package.name} v{package.version} should be {package_file_hash!r}")
+            print(
+                f"* {package.name} v{package.version} should be {package_file_hash!r}"
+            )
         return 1
 
     # Write out the SBOM as JSON.

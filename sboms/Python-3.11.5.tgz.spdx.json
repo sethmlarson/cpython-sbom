@@ -1,7 +1,7 @@
 {
     "SPDXID": "SPDXRef-DOCUMENT",
     "creationInfo": {
-        "created": "2023-09-22T15:46:40+00:00Z",
+        "created": "2023-09-22T20:43:30+00:00Z",
         "creators": [
             "Tool: cpython-sbom"
         ]
@@ -20,6 +20,13 @@
                 }
             ],
             "downloadLocation": "https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz",
+            "externalRefs": [
+                {
+                    "referenceCategory": "SECURITY",
+                    "referenceLocator": "cpe:2.3:a:python:python:3.11.5:*:*:*:*:*:*:*",
+                    "referenceType": "cpe23Type"
+                }
+            ],
             "filesAnalyzed": true,
             "licenseConcluded": "Python-2.0",
             "name": "CPython",
@@ -35,6 +42,13 @@
                 }
             ],
             "downloadLocation": "https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.gz",
+            "externalRefs": [
+                {
+                    "referenceCategory": "SECURITY",
+                    "referenceLocator": "cpe:2.3:a:libexpat_project:libexpat:2.5.0:*:*:*:*:*:*:*",
+                    "referenceType": "cpe23Type"
+                }
+            ],
             "filesAnalyzed": true,
             "licenseConcluded": "MIT",
             "name": "expat",
