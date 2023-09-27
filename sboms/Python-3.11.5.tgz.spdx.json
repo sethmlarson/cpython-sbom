@@ -1,9 +1,9 @@
 {
     "SPDXID": "SPDXRef-DOCUMENT",
     "creationInfo": {
-        "created": "2023-09-22T20:43:30+00:00Z",
+        "created": "2023-09-27T17:33:10+00:00Z",
         "creators": [
-            "Tool: cpython-sbom"
+            "Tool: cpython-sbom-0.1.0"
         ]
     },
     "dataLicense": "CC0-1.0",
@@ -31,6 +31,7 @@
             "licenseConcluded": "Python-2.0",
             "name": "CPython",
             "packageFileName": "Python-3.11.5.tgz",
+            "primaryPackagePurpose": "APPLICATION",
             "versionInfo": "3.11.5"
         },
         {
@@ -52,7 +53,55 @@
             "filesAnalyzed": true,
             "licenseConcluded": "MIT",
             "name": "expat",
+            "primaryPackagePurpose": "SOURCE",
             "versionInfo": "2.5.0"
+        },
+        {
+            "SPDXID": "SPDXRef-PACKAGE-libb2-0.98.1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "53626fddce753c454a3fea581cbbc7fe9bbcf0bc70416d48fdbbf5d87ef6c72e"
+                }
+            ],
+            "downloadLocation": "https://github.com/BLAKE2/libb2/releases/download/v0.98.1/libb2-0.98.1.tar.gz",
+            "filesAnalyzed": true,
+            "licenseConcluded": "CC0-1.0",
+            "name": "libb2",
+            "primaryPackagePurpose": "SOURCE",
+            "versionInfo": "0.98.1"
+        },
+        {
+            "SPDXID": "SPDXRef-PACKAGE-libffi-1.20",
+            "downloadLocation": "https://github.com/libffi/libffi",
+            "externalRefs": [
+                {
+                    "referenceCategory": "SECURITY",
+                    "referenceLocator": "cpe:2.3:a:libffi_project:libffi:1.20:*:*:*:*:*:*:*",
+                    "referenceType": "cpe23Type"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "MIT",
+            "name": "libffi",
+            "primaryPackagePurpose": "SOURCE",
+            "versionInfo": "1.20"
+        },
+        {
+            "SPDXID": "SPDXRef-PACKAGE-macholib-1.0",
+            "downloadLocation": "https://svn.red-bean.com/bob/macholib/tags/macholib-1.0/",
+            "externalRefs": [
+                {
+                    "referenceCategory": "PACKAGE_MANAGER",
+                    "referenceLocator": "pkg:pypi/macholib@1.0",
+                    "referenceType": "purl"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "MIT OR PSF-2.0",
+            "name": "macholib",
+            "primaryPackagePurpose": "SOURCE",
+            "versionInfo": "1.0"
         },
         {
             "SPDXID": "SPDXRef-PACKAGE-mpdecimal-2.5.1",
@@ -66,7 +115,52 @@
             "filesAnalyzed": true,
             "licenseConcluded": "BSD-2-Clause",
             "name": "mpdecimal",
+            "primaryPackagePurpose": "SOURCE",
             "versionInfo": "2.5.1"
+        },
+        {
+            "SPDXID": "SPDXRef-PACKAGE-pip-23.2.1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7ccf472345f20d35bdc9d1841ff5f313260c2c33fe417f48c30ac46cccabf5be"
+                }
+            ],
+            "downloadLocation": "https://files.pythonhosted.org/packages/50/c2/e06851e8cc28dcad7c155f4753da8833ac06a5c704c109313b8d5a62968a/pip-23.2.1-py3-none-any.whl",
+            "externalRefs": [
+                {
+                    "referenceCategory": "PACKAGE_MANAGER",
+                    "referenceLocator": "pkg:pypi/pip@23.2.1",
+                    "referenceType": "purl"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "MIT",
+            "name": "pip",
+            "primaryPackagePurpose": "SOURCE",
+            "versionInfo": "23.2.1"
+        },
+        {
+            "SPDXID": "SPDXRef-PACKAGE-setuptools-65.5.0",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a"
+                }
+            ],
+            "downloadLocation": "https://files.pythonhosted.org/packages/bb/26/7945080113158354380a12ce26873dd6c1ebd88d47f5bc24e2c5bb38c16a/setuptools-68.2.2-py3-none-any.whl",
+            "externalRefs": [
+                {
+                    "referenceCategory": "PACKAGE_MANAGER",
+                    "referenceLocator": "pkg:pypi/setuptools@65.5.0",
+                    "referenceType": "purl"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "MIT",
+            "name": "setuptools",
+            "primaryPackagePurpose": "SOURCE",
+            "versionInfo": "65.5.0"
         },
         {
             "SPDXID": "SPDXRef-PACKAGE-tiny-sha3-dcbb3192047c2a721f5f851db591871d428036a9",
@@ -80,6 +174,7 @@
             "filesAnalyzed": true,
             "licenseConcluded": "MIT",
             "name": "tiny_sha3",
+            "primaryPackagePurpose": "SOURCE",
             "versionInfo": "dcbb3192047c2a721f5f851db591871d428036a9"
         }
     ],
@@ -62496,7 +62591,32 @@
         },
         {
             "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "relatedSpdxElement": "SPDXRef-PACKAGE-libb2-0.98.1",
+            "relationshipType": "CONTAINS"
+        },
+        {
+            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "relatedSpdxElement": "SPDXRef-PACKAGE-libffi-1.20",
+            "relationshipType": "CONTAINS"
+        },
+        {
+            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "relatedSpdxElement": "SPDXRef-PACKAGE-macholib-1.0",
+            "relationshipType": "CONTAINS"
+        },
+        {
+            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
             "relatedSpdxElement": "SPDXRef-PACKAGE-mpdecimal-2.5.1",
+            "relationshipType": "CONTAINS"
+        },
+        {
+            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "relatedSpdxElement": "SPDXRef-PACKAGE-pip-23.2.1",
+            "relationshipType": "CONTAINS"
+        },
+        {
+            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "relatedSpdxElement": "SPDXRef-PACKAGE-setuptools-65.5.0",
             "relationshipType": "CONTAINS"
         },
         {
@@ -67450,32 +67570,32 @@
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib---init--.py",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib-dyld.py",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib-dylib.py",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib-fetch-macholib",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib-fetch-macholib.bat",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-macholib-1.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ctypes-macholib-framework.py",
             "relationshipType": "CONTAINS"
         },
@@ -69040,12 +69160,12 @@
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-pip-23.2.1",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ensurepip--bundled-pip-23.2.1-py3-none-any.whl",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-setuptools-65.5.0",
             "relatedSpdxElement": "SPDXRef-FILE-Lib-ensurepip--bundled-setuptools-65.5.0-py3-none-any.whl",
             "relationshipType": "CONTAINS"
         },
@@ -79235,72 +79355,72 @@
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2-config.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2-impl.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2b-load-sse2.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2b-load-sse41.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2b-ref.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2b-round.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2b.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s-load-sse2.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s-load-sse41.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s-load-xop.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s-ref.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s-round.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libb2-0.98.1",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--blake2-impl-blake2s.c",
             "relationshipType": "CONTAINS"
         },
@@ -79380,102 +79500,102 @@
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-LICENSE",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-README",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-README.pyobjc",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-ffi.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-types.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-ffi.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-ffi-common.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-fficonfig.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-ffitarget.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-ppc-ffitarget.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-include-x86-ffitarget.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-powerpc-ppc-darwin.S",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-powerpc-ppc-darwin.h",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-powerpc-ppc-darwin-closure.S",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-powerpc-ppc-ffi-darwin.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-powerpc-ppc64-darwin-closure.S",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-x86-darwin64.S",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-x86-x86-darwin.S",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-x86-x86-ffi64.c",
             "relationshipType": "CONTAINS"
         },
         {
-            "spdxElementId": "SPDXRef-PACKAGE-CPython-3.11.5",
+            "spdxElementId": "SPDXRef-PACKAGE-libffi-1.20",
             "relatedSpdxElement": "SPDXRef-FILE-Modules--ctypes-libffi-osx-x86-x86-ffi-darwin.c",
             "relationshipType": "CONTAINS"
         },
