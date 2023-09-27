@@ -182,7 +182,7 @@ def main() -> int:
             name=CPYTHON_TARBALL_FILENAME,
             created=datetime.datetime.now(tz=datetime.timezone.utc),
             document_namespace=f"https://www.python.org/ftp/python/{CPYTHON_VERSION}/{CPYTHON_TARBALL_FILENAME}.spdx.json",
-            creators=[spdx.Actor(spdx.ActorType.TOOL, name="cpython-sbom")],
+            creators=[spdx.Actor(spdx.ActorType.TOOL, name="cpython-sbom-0.1.0")],
         )
     )
 
