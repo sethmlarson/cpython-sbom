@@ -23,6 +23,7 @@ class Package:
     version: str
     license: str
     license_evidence: str
+    primary_package_purpose: spdx.PackagePurpose
     files_include: list[str]
     files_exclude: list[str] | None = None
     files_include_hashes: list[str] = None
@@ -59,6 +60,7 @@ PACKAGES = [
         version=CPYTHON_VERSION,
         license="Python-2.0",
         license_evidence="LICENSE",
+        primary_package_purpose = spdx.PackagePurpose.APPLICATION,
         download_url=f"https://www.python.org/ftp/python/{CPYTHON_VERSION}/{CPYTHON_TARBALL_FILENAME}",
         download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
         files_include=[],
@@ -69,6 +71,7 @@ PACKAGES = [
         version="2.5.1",
         license="BSD-2-Clause",
         license_evidence=NOASSERTION,
+        primary_package_purpose = spdx.PackagePurpose.SOURCE,
         download_url="https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-2.5.1.tar.gz",
         download_hash_sha256="9f9cd4c041f99b5c49ffb7b59d9f12d95b683d88585608aa56a6307667b2b21f",
         files_include=["Modules/_decimal/libmpdec/"],
@@ -81,6 +84,7 @@ PACKAGES = [
         version="dcbb3192047c2a721f5f851db591871d428036a9",
         license="MIT",
         license_evidence="Modules/_sha3/LICENSE",
+        primary_package_purpose = spdx.PackagePurpose.SOURCE,
         download_url="https://github.com/mjosaarinen/tiny_sha3/archive/dcbb3192047c2a721f5f851db591871d428036a9.zip",
         download_hash_sha256="9b43effc6c8e234af84fd2367f831a697248191c8fa35c4441bb222924d2836a",
         files_include=["Modules/_sha3/"],
@@ -97,6 +101,7 @@ PACKAGES = [
         version="2.5.0",
         license="MIT",
         license_evidence="Modules/expat/COPYING",
+        primary_package_purpose = spdx.PackagePurpose.SOURCE,
         download_url="https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.gz",
         download_hash_sha256="6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033",
         files_include=["Modules/expat/"],
@@ -139,6 +144,7 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
         ],
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
         external_references=external_references,
+        primary_package_purpose=package.primary_package_purpose
     )
 
 
