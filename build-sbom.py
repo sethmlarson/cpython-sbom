@@ -30,6 +30,7 @@ class Package:
     download_url: str | None = None
     download_hash_sha256: str | None = None
     cpes: list[str] = None
+    purl: str | None = None
 
     @property
     def spdx_id(self) -> str:
@@ -60,18 +61,18 @@ PACKAGES = [
         version=CPYTHON_VERSION,
         license="Python-2.0",
         license_evidence="LICENSE",
-        primary_package_purpose = spdx.PackagePurpose.APPLICATION,
+        primary_package_purpose=spdx.PackagePurpose.APPLICATION,
         download_url=f"https://www.python.org/ftp/python/{CPYTHON_VERSION}/{CPYTHON_TARBALL_FILENAME}",
         download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
-        files_include=[],
         cpes=[f"cpe:2.3:a:python:python:{CPYTHON_VERSION}:*:*:*:*:*:*:*"],
+        files_include=[],
     ),
     Package(
         name="mpdecimal",
         version="2.5.1",
         license="BSD-2-Clause",
         license_evidence=NOASSERTION,
-        primary_package_purpose = spdx.PackagePurpose.SOURCE,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
         download_url="https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-2.5.1.tar.gz",
         download_hash_sha256="9f9cd4c041f99b5c49ffb7b59d9f12d95b683d88585608aa56a6307667b2b21f",
         files_include=["Modules/_decimal/libmpdec/"],
@@ -84,7 +85,7 @@ PACKAGES = [
         version="dcbb3192047c2a721f5f851db591871d428036a9",
         license="MIT",
         license_evidence="Modules/_sha3/LICENSE",
-        primary_package_purpose = spdx.PackagePurpose.SOURCE,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
         download_url="https://github.com/mjosaarinen/tiny_sha3/archive/dcbb3192047c2a721f5f851db591871d428036a9.zip",
         download_hash_sha256="9b43effc6c8e234af84fd2367f831a697248191c8fa35c4441bb222924d2836a",
         files_include=["Modules/_sha3/"],
@@ -101,14 +102,82 @@ PACKAGES = [
         version="2.5.0",
         license="MIT",
         license_evidence="Modules/expat/COPYING",
-        primary_package_purpose = spdx.PackagePurpose.SOURCE,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
         download_url="https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.gz",
         download_hash_sha256="6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033",
+        cpes=["cpe:2.3:a:libexpat_project:libexpat:2.5.0:*:*:*:*:*:*:*"],
         files_include=["Modules/expat/"],
         files_include_hashes=[
             "1ce1444111271cc11d71b72c376a17447cf3d3b7dd61a0a01456d2e06faf22e9"
         ],
-        cpes=["cpe:2.3:a:libexpat_project:libexpat:2.5.0:*:*:*:*:*:*:*"],
+    ),
+    Package(
+        name="macholib",
+        version="1.0",
+        download_url="https://svn.red-bean.com/bob/macholib/tags/macholib-1.0/",
+        license="MIT OR PSF-2.0",
+        license_evidence=NOASSERTION,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        purl="pkg:pypi/macholib@1.0",
+        files_include=["Lib/ctypes/macholib/"],
+        files_exclude=["Lib/ctypes/macholib/README.ctypes"],
+        files_include_hashes=[
+            "59aa1f3194df7ebe23b0a821cb502b112032fc2e91470a04585d04c2ee63b3b5"
+        ],
+    ),
+    Package(
+        name="libffi",
+        version="1.20",
+        download_url="https://github.com/libffi/libffi",
+        license="MIT",
+        license_evidence=NOASSERTION,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        cpes=["cpe:2.3:a:libffi_project:libffi:1.20:*:*:*:*:*:*:*"],
+        files_include=["Modules/_ctypes/libffi_osx/"],
+        files_include_hashes=[
+            "2720798b5a98d9b5c8a4d88144670b8c63f3ae92ef26491661350720094f5833"
+        ],
+    ),
+    Package(
+        name="pip",
+        version="23.2.1",
+        download_url="https://files.pythonhosted.org/packages/50/c2/e06851e8cc28dcad7c155f4753da8833ac06a5c704c109313b8d5a62968a/pip-23.2.1-py3-none-any.whl",
+        download_hash_sha256="7ccf472345f20d35bdc9d1841ff5f313260c2c33fe417f48c30ac46cccabf5be",
+        license="MIT",
+        license_evidence=NOASSERTION,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        purl="pkg:pypi/pip@23.2.1",
+        files_include=["Lib/ensurepip/_bundled/pip-23.2.1-py3-none-any.whl"],
+        files_include_hashes=[
+            "e3d26a8c958c7b53a243a24913fded4d4e7000dcf58a628d1d9c35111713c1a1"
+        ],
+    ),
+    Package(
+        name="setuptools",
+        version="65.5.0",
+        download_url="https://files.pythonhosted.org/packages/bb/26/7945080113158354380a12ce26873dd6c1ebd88d47f5bc24e2c5bb38c16a/setuptools-68.2.2-py3-none-any.whl",
+        download_hash_sha256="b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a",
+        license="MIT",
+        license_evidence=NOASSERTION,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        purl="pkg:pypi/setuptools@65.5.0",
+        files_include=["Lib/ensurepip/_bundled/setuptools-65.5.0-py3-none-any.whl"],
+        files_include_hashes=[
+            "fe039e3aa4ac3550aa63c80b2ee9af608bb6b53abed32fc5ec3bca1b859694c0"
+        ],
+    ),
+    Package(
+        name="libb2",
+        version="0.98.1",
+        download_url="https://github.com/BLAKE2/libb2/releases/download/v0.98.1/libb2-0.98.1.tar.gz",
+        download_hash_sha256="53626fddce753c454a3fea581cbbc7fe9bbcf0bc70416d48fdbbf5d87ef6c72e",
+        license="CC0-1.0",
+        license_evidence=NOASSERTION,
+        primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        files_include=["Modules/_blake2/impl/"],
+        files_include_hashes=[
+            "8e7205846d00022f568480d9ed6ddc5d3de47cc5a658ca04747a3eb8003fa498"
+        ],
     ),
 ]
 PACKAGES[1:] = sorted(PACKAGES[1:], key=lambda pkg: pkg.name)
@@ -134,17 +203,28 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
                 )
             )
 
+    if package.purl:
+        external_references.append(
+            spdx.ExternalPackageRef(
+                spdx.ExternalPackageRefCategory.PACKAGE_MANAGER, "purl", package.purl
+            )
+        )
+
+    checksums = []
+    if package.download_hash_sha256 is not None:
+        checksums.append(
+            spdx.Checksum(spdx.ChecksumAlgorithm.SHA256, package.download_hash_sha256)
+        )
+
     return spdx.Package(
         spdx_id=package.spdx_id,
         name=package.name,
         version=package.version,
         download_location=package.download_url,
-        checksums=[
-            spdx.Checksum(spdx.ChecksumAlgorithm.SHA256, package.download_hash_sha256)
-        ],
+        checksums=checksums,
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
         external_references=external_references,
-        primary_package_purpose=package.primary_package_purpose
+        primary_package_purpose=package.primary_package_purpose,
     )
 
 
