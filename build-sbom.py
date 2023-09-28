@@ -31,6 +31,7 @@ class Package:
     download_hash_sha256: str | None = None
     cpes: list[str] = None
     purl: str | None = None
+    supplier: spdx.Actor | None = None
 
     @property
     def spdx_id(self) -> str:
@@ -66,6 +67,7 @@ PACKAGES = [
         download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
         cpes=[f"cpe:2.3:a:python:python:{CPYTHON_VERSION}:*:*:*:*:*:*:*"],
         files_include=[],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Software Foundation"),
     ),
     Package(
         name="mpdecimal",
@@ -79,6 +81,7 @@ PACKAGES = [
         files_include_hashes=[
             "f86d26a0ada3a757f599453a8f86b46ee29073b85dd228783632aacc00ab9e50"
         ],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="bytereef.org"),
     ),
     Package(
         name="tiny_sha3",
@@ -96,6 +99,7 @@ PACKAGES = [
         files_include_hashes=[
             "9dae1929a47e74039273a530580c8fea2404922f9b34de42eb4dd2f69397b34b"
         ],
+        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Markku-Juhani O. Saarinen", email="mjos@iki.fi"),
     ),
     Package(
         name="expat",
@@ -110,6 +114,7 @@ PACKAGES = [
         files_include_hashes=[
             "1ce1444111271cc11d71b72c376a17447cf3d3b7dd61a0a01456d2e06faf22e9"
         ],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Expat development team"),
     ),
     Package(
         name="macholib",
@@ -124,6 +129,7 @@ PACKAGES = [
         files_include_hashes=[
             "59aa1f3194df7ebe23b0a821cb502b112032fc2e91470a04585d04c2ee63b3b5"
         ],
+        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Ronald Oussoren", email="ronaldoussoren@mac.com"),
     ),
     Package(
         name="libffi",
@@ -137,6 +143,7 @@ PACKAGES = [
         files_include_hashes=[
             "2720798b5a98d9b5c8a4d88144670b8c63f3ae92ef26491661350720094f5833"
         ],
+        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Ronald Oussoren", email="ronaldoussoren@mac.com"),
     ),
     Package(
         name="pip",
@@ -151,6 +158,7 @@ PACKAGES = [
         files_include_hashes=[
             "e3d26a8c958c7b53a243a24913fded4d4e7000dcf58a628d1d9c35111713c1a1"
         ],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Packaging Authority")
     ),
     Package(
         name="setuptools",
@@ -165,6 +173,7 @@ PACKAGES = [
         files_include_hashes=[
             "fe039e3aa4ac3550aa63c80b2ee9af608bb6b53abed32fc5ec3bca1b859694c0"
         ],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Packaging Authority")
     ),
     Package(
         name="libb2",
@@ -178,6 +187,7 @@ PACKAGES = [
         files_include_hashes=[
             "8e7205846d00022f568480d9ed6ddc5d3de47cc5a658ca04747a3eb8003fa498"
         ],
+        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="BLAKE2 — fast secure hashing")
     ),
 ]
 PACKAGES[1:] = sorted(PACKAGES[1:], key=lambda pkg: pkg.name)
@@ -225,6 +235,7 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
         external_references=external_references,
         primary_package_purpose=package.primary_package_purpose,
+        supplier=package.supplier
     )
 
 
