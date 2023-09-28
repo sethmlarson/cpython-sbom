@@ -77,6 +77,7 @@ PACKAGES = [
         primary_package_purpose=spdx.PackagePurpose.SOURCE,
         download_url="https://www.bytereef.org/software/mpdecimal/releases/mpdecimal-2.5.1.tar.gz",
         download_hash_sha256="9f9cd4c041f99b5c49ffb7b59d9f12d95b683d88585608aa56a6307667b2b21f",
+        cpes=["cpe:2.3:a:bytereef:mpdecimal:2.5.1:*:*:*:*:*:*:*"],
         files_include=["Modules/_decimal/libmpdec/"],
         files_include_hashes=[
             "f86d26a0ada3a757f599453a8f86b46ee29073b85dd228783632aacc00ab9e50"
@@ -91,6 +92,7 @@ PACKAGES = [
         primary_package_purpose=spdx.PackagePurpose.SOURCE,
         download_url="https://github.com/mjosaarinen/tiny_sha3/archive/dcbb3192047c2a721f5f851db591871d428036a9.zip",
         download_hash_sha256="9b43effc6c8e234af84fd2367f831a697248191c8fa35c4441bb222924d2836a",
+        cpes=["cpe:2.3:a:mjosaarinen:tiny_sha3:dcbb3192047c2a721f5f851db591871d428036a9:*:*:*:*:*:*:*"],
         files_include=["Modules/_sha3/"],
         files_exclude=[
             "Modules/_sha3/clinic/",
@@ -183,6 +185,7 @@ PACKAGES = [
         license="CC0-1.0",
         license_evidence=NOASSERTION,
         primary_package_purpose=spdx.PackagePurpose.SOURCE,
+        cpes=["cpe:2.3:a:blake2:libb2:0.98.1:*:*:*:*:*:*:*"],
         files_include=["Modules/_blake2/impl/"],
         files_include_hashes=[
             "8e7205846d00022f568480d9ed6ddc5d3de47cc5a658ca04747a3eb8003fa498"
