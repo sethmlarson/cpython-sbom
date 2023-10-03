@@ -205,6 +205,16 @@ CPYTHON_PACKAGE = PACKAGES[0]
 assert CPYTHON_PACKAGE.name == "CPython"
 
 
+def package_to_verification_code(package: Package) -> str:
+    # https://spdx.github.io/spdx-spec/v2.3/package-information/#791-description
+    # for SPDX PackageVerificationCode algorithm
+    pkg_file_checksums = PACKAGES_TO_FILE_CHECKSUMS.get(package.spdx_id, [])
+    file_sha1s = [checksums.get("sha1") for checksums in pkg_file_checksums]
+    file_sha1s.sort()
+    sha1_combined = ''.join(file_sha1s)
+    return hashlib.sha1(sha1_combined.encode()).hexdigest()  # nosec
+
+
 def package_to_spdx_package(package: Package) -> spdx.Package:
     external_references = []
     if package.cpes:
@@ -229,12 +239,16 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
             spdx.Checksum(spdx.ChecksumAlgorithm.SHA256, package.download_hash_sha256)
         )
 
+    verification_code = package_to_verification_code(package)
+    spdx_verification_code = spdx.PackageVerificationCode(verification_code, package.files_exclude)
+
     return spdx.Package(
         spdx_id=package.spdx_id,
         name=package.name,
         version=package.version,
         download_location=package.download_url,
         checksums=checksums,
+        verification_code=spdx_verification_code,
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
         external_references=external_references,
         primary_package_purpose=package.primary_package_purpose,
@@ -299,18 +313,6 @@ def main() -> int:
         )
     )
 
-    # Add all the other packages
-    for package in PACKAGES[1:]:
-        spdx_package = package_to_spdx_package(package)
-        sbom.packages.append(spdx_package)
-        sbom.relationships.append(
-            spdx.Relationship(
-                root_package.spdx_id,
-                spdx.RelationshipType.CONTAINS,
-                spdx_package.spdx_id,
-            )
-        )
-
     # Now for all the files!
     for root, dirs, filenames in os.walk(cpython_dir):
         # We sort for deterministic SBOM builds.
@@ -336,11 +338,17 @@ def main() -> int:
                 open(abs_filepath, "rb"), "sha256"
             ).hexdigest()
 
+            sha1_checksum = hashlib.file_digest(
+                open(abs_filepath, "rb"), "sha1"
+            ).hexdigest()
+
             # We don't need to track CPython file checksums since
             # the version information is known before downloading the tarball.
             if file_package_spdx_id != CPYTHON_PACKAGE.spdx_id:
-                PACKAGES_TO_FILE_CHECKSUMS.setdefault(file_package_spdx_id, []).append(
-                    sha256_checksum
+                PACKAGES_TO_FILE_CHECKSUMS.setdefault(file_package_spdx_id, []).append({
+                        "sha256": sha256_checksum,
+                        "sha1": sha1_checksum
+                    }
                 )
 
             # Add the SPDX file to the package.
@@ -350,9 +358,7 @@ def main() -> int:
                 checksums=[
                     spdx.Checksum(
                         spdx.ChecksumAlgorithm.SHA1,
-                        hashlib.file_digest(
-                            open(abs_filepath, "rb"), "sha1"
-                        ).hexdigest(),
+                        sha1_checksum,
                     ),
                     spdx.Checksum(
                         spdx.ChecksumAlgorithm.SHA256,
@@ -369,14 +375,27 @@ def main() -> int:
                 )
             )
 
+    # Add all the other packages
+    for package in PACKAGES[1:]:
+        spdx_package = package_to_spdx_package(package)
+        sbom.packages.append(spdx_package)
+        sbom.relationships.append(
+            spdx.Relationship(
+                root_package.spdx_id,
+                spdx.RelationshipType.CONTAINS,
+                spdx_package.spdx_id,
+            )
+        )
+
     # After we have processed all files, now we go back through our packages and double-check
     # that no files have changed since the last time we recorded the 'Package' entry,
     # otherwise we may need to update the version information for the package.
     package_file_hash_differences = []
     for package in PACKAGES[1:]:
         hashobj = hashlib.sha256()
-        for file_hash in sorted(PACKAGES_TO_FILE_CHECKSUMS[package.spdx_id]):
-            hashobj.update(file_hash.encode())
+        file_checksums_sorted = sorted(PACKAGES_TO_FILE_CHECKSUMS[package.spdx_id], key=lambda x: x["sha256"])
+        for file_hash in file_checksums_sorted:
+            hashobj.update(file_hash["sha256"].encode())
         package_file_hash = hashobj.hexdigest()
         if package_file_hash not in (package.files_include_hashes or ()):
             package_file_hash_differences.append((package, package_file_hash))
