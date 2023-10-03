@@ -11,7 +11,10 @@ import spdx_tools.spdx.model as spdx
 import spdx_tools.spdx.writer.json.json_writer as spdx_json
 import urllib3
 
-CPYTHON_VERSION = "3.11.5"
+CPYTHON_VERSION = "3.12.0"
+CPYTHON_VERSION_PARTS = tuple(
+    int(re.search(r"^([0-9]+)", part).group(1)) for part in CPYTHON_VERSION.split(".")
+)
 CPYTHON_TARBALL_FILENAME = f"Python-{CPYTHON_VERSION}.tgz"
 
 NOASSERTION = "NOASSERTION"
@@ -67,7 +70,9 @@ PACKAGES = [
         download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
         cpes=[f"cpe:2.3:a:python:python:{CPYTHON_VERSION}:*:*:*:*:*:*:*"],
         files_include=[],
-        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Software Foundation"),
+        supplier=spdx.Actor(
+            spdx.ActorType.ORGANIZATION, name="Python Software Foundation"
+        ),
     ),
     Package(
         name="mpdecimal",
@@ -80,28 +85,12 @@ PACKAGES = [
         cpes=["cpe:2.3:a:bytereef:mpdecimal:2.5.1:*:*:*:*:*:*:*"],
         files_include=["Modules/_decimal/libmpdec/"],
         files_include_hashes=[
-            "f86d26a0ada3a757f599453a8f86b46ee29073b85dd228783632aacc00ab9e50"
+            # 3.11
+            "f86d26a0ada3a757f599453a8f86b46ee29073b85dd228783632aacc00ab9e50",
+            # 3.12
+            "b740816b2e242170d5c1ad037b2634c2f5d2be4a5a91190768006e0ffdcd292c",
         ],
         supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="bytereef.org"),
-    ),
-    Package(
-        name="tiny_sha3",
-        version="dcbb3192047c2a721f5f851db591871d428036a9",
-        license="MIT",
-        license_evidence="Modules/_sha3/LICENSE",
-        primary_package_purpose=spdx.PackagePurpose.SOURCE,
-        download_url="https://github.com/mjosaarinen/tiny_sha3/archive/dcbb3192047c2a721f5f851db591871d428036a9.zip",
-        download_hash_sha256="9b43effc6c8e234af84fd2367f831a697248191c8fa35c4441bb222924d2836a",
-        cpes=["cpe:2.3:a:mjosaarinen:tiny_sha3:dcbb3192047c2a721f5f851db591871d428036a9:*:*:*:*:*:*:*"],
-        files_include=["Modules/_sha3/"],
-        files_exclude=[
-            "Modules/_sha3/clinic/",
-            "Modules/_sha3/sha3module.c",
-        ],
-        files_include_hashes=[
-            "9dae1929a47e74039273a530580c8fea2404922f9b34de42eb4dd2f69397b34b"
-        ],
-        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Markku-Juhani O. Saarinen", email="mjos@iki.fi"),
     ),
     Package(
         name="expat",
@@ -131,21 +120,11 @@ PACKAGES = [
         files_include_hashes=[
             "59aa1f3194df7ebe23b0a821cb502b112032fc2e91470a04585d04c2ee63b3b5"
         ],
-        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Ronald Oussoren", email="ronaldoussoren@mac.com"),
-    ),
-    Package(
-        name="libffi",
-        version="1.20",
-        download_url="https://github.com/libffi/libffi",
-        license="MIT",
-        license_evidence=NOASSERTION,
-        primary_package_purpose=spdx.PackagePurpose.SOURCE,
-        cpes=["cpe:2.3:a:libffi_project:libffi:1.20:*:*:*:*:*:*:*"],
-        files_include=["Modules/_ctypes/libffi_osx/"],
-        files_include_hashes=[
-            "2720798b5a98d9b5c8a4d88144670b8c63f3ae92ef26491661350720094f5833"
-        ],
-        supplier=spdx.Actor(spdx.ActorType.PERSON, name="Ronald Oussoren", email="ronaldoussoren@mac.com"),
+        supplier=spdx.Actor(
+            spdx.ActorType.PERSON,
+            name="Ronald Oussoren",
+            email="ronaldoussoren@mac.com",
+        ),
     ),
     Package(
         name="pip",
@@ -160,22 +139,9 @@ PACKAGES = [
         files_include_hashes=[
             "e3d26a8c958c7b53a243a24913fded4d4e7000dcf58a628d1d9c35111713c1a1"
         ],
-        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Packaging Authority")
-    ),
-    Package(
-        name="setuptools",
-        version="65.5.0",
-        download_url="https://files.pythonhosted.org/packages/bb/26/7945080113158354380a12ce26873dd6c1ebd88d47f5bc24e2c5bb38c16a/setuptools-68.2.2-py3-none-any.whl",
-        download_hash_sha256="b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a",
-        license="MIT",
-        license_evidence=NOASSERTION,
-        primary_package_purpose=spdx.PackagePurpose.SOURCE,
-        purl="pkg:pypi/setuptools@65.5.0",
-        files_include=["Lib/ensurepip/_bundled/setuptools-65.5.0-py3-none-any.whl"],
-        files_include_hashes=[
-            "fe039e3aa4ac3550aa63c80b2ee9af608bb6b53abed32fc5ec3bca1b859694c0"
-        ],
-        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="Python Packaging Authority")
+        supplier=spdx.Actor(
+            spdx.ActorType.ORGANIZATION, name="Python Packaging Authority"
+        ),
     ),
     Package(
         name="libb2",
@@ -190,9 +156,105 @@ PACKAGES = [
         files_include_hashes=[
             "8e7205846d00022f568480d9ed6ddc5d3de47cc5a658ca04747a3eb8003fa498"
         ],
-        supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="BLAKE2 — fast secure hashing")
+        supplier=spdx.Actor(
+            spdx.ActorType.ORGANIZATION, name="BLAKE2 — fast secure hashing"
+        ),
     ),
 ]
+
+if CPYTHON_VERSION_PARTS < (3, 12):
+    PACKAGES.extend(
+        (
+            Package(
+                name="libffi",
+                version="1.20",
+                download_url="https://github.com/libffi/libffi",
+                license="MIT",
+                license_evidence=NOASSERTION,
+                primary_package_purpose=spdx.PackagePurpose.SOURCE,
+                cpes=["cpe:2.3:a:libffi_project:libffi:1.20:*:*:*:*:*:*:*"],
+                files_include=["Modules/_ctypes/libffi_osx/"],
+                files_include_hashes=[
+                    "2720798b5a98d9b5c8a4d88144670b8c63f3ae92ef26491661350720094f5833"
+                ],
+                supplier=spdx.Actor(
+                    spdx.ActorType.PERSON,
+                    name="Ronald Oussoren",
+                    email="ronaldoussoren@mac.com",
+                ),
+            ),
+            Package(
+                name="tiny_sha3",
+                version="dcbb3192047c2a721f5f851db591871d428036a9",
+                license="MIT",
+                license_evidence="Modules/_sha3/LICENSE",
+                primary_package_purpose=spdx.PackagePurpose.SOURCE,
+                download_url="https://github.com/mjosaarinen/tiny_sha3/archive/dcbb3192047c2a721f5f851db591871d428036a9.zip",
+                download_hash_sha256="9b43effc6c8e234af84fd2367f831a697248191c8fa35c4441bb222924d2836a",
+                cpes=[
+                    "cpe:2.3:a:mjosaarinen:tiny_sha3:dcbb3192047c2a721f5f851db591871d428036a9:*:*:*:*:*:*:*"
+                ],
+                files_include=["Modules/_sha3/"],
+                files_exclude=[
+                    "Modules/_sha3/clinic/",
+                    "Modules/_sha3/sha3module.c",
+                ],
+                files_include_hashes=[
+                    "9dae1929a47e74039273a530580c8fea2404922f9b34de42eb4dd2f69397b34b"
+                ],
+                supplier=spdx.Actor(
+                    spdx.ActorType.PERSON,
+                    name="Markku-Juhani O. Saarinen",
+                    email="mjos@iki.fi",
+                ),
+            ),
+            Package(
+                name="setuptools",
+                version="65.5.0",
+                download_url="https://files.pythonhosted.org/packages/bb/26/7945080113158354380a12ce26873dd6c1ebd88d47f5bc24e2c5bb38c16a/setuptools-68.2.2-py3-none-any.whl",
+                download_hash_sha256="b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a",
+                license="MIT",
+                license_evidence=NOASSERTION,
+                primary_package_purpose=spdx.PackagePurpose.SOURCE,
+                purl="pkg:pypi/setuptools@65.5.0",
+                files_include=[
+                    "Lib/ensurepip/_bundled/setuptools-65.5.0-py3-none-any.whl"
+                ],
+                files_include_hashes=[
+                    "fe039e3aa4ac3550aa63c80b2ee9af608bb6b53abed32fc5ec3bca1b859694c0"
+                ],
+                supplier=spdx.Actor(
+                    spdx.ActorType.ORGANIZATION, name="Python Packaging Authority"
+                ),
+            ),
+        )
+    )
+else:
+    PACKAGES.append(
+        Package(
+            name="hacl-star",
+            version="521af282fdf6d60227335120f18ae9309a4b8e8c",
+            license="Apache-2.0",
+            license_evidence=NOASSERTION,
+            primary_package_purpose=spdx.PackagePurpose.SOURCE,
+            download_url="https://github.com/hacl-star/hacl-star/archive/521af282fdf6d60227335120f18ae9309a4b8e8c.zip",
+            download_hash_sha256="c23ac158b238c368389dc86bfc315263e5c0e57785da74144aea2cab9a3d51a2",
+            cpes=[
+                "cpe:2.3:a:hacl-star:hacl-star:c23ac158b238c368389dc86bfc315263e5c0e57785da74144aea2cab9a3d51a2:*:*:*:*:*:*:*"
+            ],
+            files_include=["Modules/_hacl/"],
+            files_exclude=[
+                "Modules/_hacl/refresh.sh",
+                "Modules/_hacl/README.md",
+                "Modules/_hacl/python_hacl_namespaces.h",
+            ],
+            files_include_hashes=[
+                "9ad923ab707b8b06eb5feebaf0fdf9ad6777af7b82eb67e9411c208bb56259bc"
+            ],
+            supplier=spdx.Actor(spdx.ActorType.ORGANIZATION, name="HACL* Developers"),
+        )
+    )
+
 PACKAGES[1:] = sorted(PACKAGES[1:], key=lambda pkg: pkg.name)
 
 # Used for tracking all file checksums of 'included' files for non-CPython
@@ -238,7 +300,7 @@ def package_to_spdx_package(package: Package) -> spdx.Package:
         license_concluded=spdx_license.spdx_licensing.parse(package.license),
         external_references=external_references,
         primary_package_purpose=package.primary_package_purpose,
-        supplier=package.supplier
+        supplier=package.supplier,
     )
 
 
