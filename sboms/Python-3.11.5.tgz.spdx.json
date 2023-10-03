@@ -1,7 +1,7 @@
 {
     "SPDXID": "SPDXRef-DOCUMENT",
     "creationInfo": {
-        "created": "2023-09-27T17:33:10+00:00Z",
+        "created": "2023-10-03T18:48:40+00:00Z",
         "creators": [
             "Tool: cpython-sbom-0.1.0"
         ]
@@ -148,6 +148,11 @@
             ],
             "downloadLocation": "https://files.pythonhosted.org/packages/50/c2/e06851e8cc28dcad7c155f4753da8833ac06a5c704c109313b8d5a62968a/pip-23.2.1-py3-none-any.whl",
             "externalRefs": [
+                {
+                    "referenceCategory": "SECURITY",
+                    "referenceLocator": "cpe:2.3:a:pypa:pip:23.2.1:*:*:*:*:*:*:*",
+                    "referenceType": "cpe23Type"
+                },
                 {
                     "referenceCategory": "PACKAGE_MANAGER",
                     "referenceLocator": "pkg:pypi/pip@23.2.1",

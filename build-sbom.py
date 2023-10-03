@@ -135,6 +135,9 @@ PACKAGES = [
         license_evidence=NOASSERTION,
         primary_package_purpose=spdx.PackagePurpose.SOURCE,
         purl="pkg:pypi/pip@23.2.1",
+        cpes=[
+            "cpe:2.3:a:pypa:pip:23.2.1:*:*:*:*:*:*:*",
+        ],
         files_include=["Lib/ensurepip/_bundled/pip-23.2.1-py3-none-any.whl"],
         files_include_hashes=[
             "e3d26a8c958c7b53a243a24913fded4d4e7000dcf58a628d1d9c35111713c1a1"
