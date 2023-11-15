@@ -11,10 +11,11 @@ import spdx_tools.spdx.model as spdx
 import spdx_tools.spdx.writer.json.json_writer as spdx_json
 import urllib3
 
-CPYTHON_VERSION = "3.12.0"
+CPYTHON_VERSION = "3.13.0a1"
 CPYTHON_VERSION_PARTS = tuple(
     int(re.search(r"^([0-9]+)", part).group(1)) for part in CPYTHON_VERSION.split(".")
 )
+CPYTHON_VERSION_FOR_FTP = ".".join(map(str, CPYTHON_VERSION_PARTS))
 CPYTHON_TARBALL_FILENAME = f"Python-{CPYTHON_VERSION}.tgz"
 
 NOASSERTION = "NOASSERTION"
@@ -66,8 +67,8 @@ PACKAGES = [
         license="Python-2.0",
         license_evidence="LICENSE",
         primary_package_purpose=spdx.PackagePurpose.APPLICATION,
-        download_url=f"https://www.python.org/ftp/python/{CPYTHON_VERSION}/{CPYTHON_TARBALL_FILENAME}",
-        download_hash_sha256="64424e96e2457abbac899b90f9530985b51eef2905951febd935f0e73414caeb",
+        download_url=f"https://www.python.org/ftp/python/{CPYTHON_VERSION_FOR_FTP}/{CPYTHON_TARBALL_FILENAME}",
+        download_hash_sha256="fb1674c6317651bc9c1dfeb6339cd706b84c95f8e614f395d2ffb0af19bbe885",
         cpes=[f"cpe:2.3:a:python:python:{CPYTHON_VERSION}:*:*:*:*:*:*:*"],
         files_include=[],
         supplier=spdx.Actor(
